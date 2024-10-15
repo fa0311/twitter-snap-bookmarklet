@@ -10,7 +10,7 @@
 		"@hono/node-server": "^1.13.0",
 		"@hono/zod-validator": "^0.2.2",
 		"dotenv": "^16.4.5",
-		"hono": "^4.6.2",
+		"hono": "^4.6.5",
 		"twitter-openapi-typescript": "^0.0.35",
 		"twitter-snap": "^0.0.53",
 		"twitter-snap-core": "^0.0.37",
