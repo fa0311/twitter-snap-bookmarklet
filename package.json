@@ -1,26 +1,26 @@
 {
-	"name": "twitter-snap-webui",
-	"type": "module",
-	"scripts": {
-		"dev": "tsx watch src/index.ts",
-		"build": "tsc -p tsconfig.json",
-		"start": "node dist/index.js"
-	},
-	"dependencies": {
-		"@hono/node-server": "^1.13.0",
-		"@hono/zod-validator": "^0.2.2",
-		"dotenv": "^16.4.5",
-		"hono": "^4.6.2",
-		"twitter-openapi-typescript": "^0.0.35",
-		"twitter-snap": "^0.0.53",
-		"twitter-snap-core": "^0.0.37",
-		"webdav": "^5.7.1",
-		"zod": "^3.23.8",
-		"typescript": "^5.6.2"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.1",
-		"@types/node": "^20.16.5",
-		"tsx": "^4.7.1"
-	}
+  "name": "twitter-snap-webui",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.0",
+    "@hono/zod-validator": "^0.2.2",
+    "dotenv": "^16.4.5",
+    "hono": "^4.7.4",
+    "twitter-openapi-typescript": "^0.0.51",
+    "twitter-snap": "^0.0.71",
+    "twitter-snap-core": "^0.0.43",
+    "webdav": "^5.7.1",
+    "zod": "^3.23.8",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.1",
+    "@types/node": "^20.16.5",
+    "tsx": "^4.7.1"
+  }
 }
