@@ -20,15 +20,9 @@ importers:
       hono:
         specifier: ^4.7.4
         version: 4.7.4
-      twitter-openapi-typescript:
-        specifier: ^0.0.51
-        version: 0.0.51
       twitter-snap:
         specifier: ^0.0.71
         version: 0.0.71(typescript@5.6.2)
-      twitter-snap-core:
-        specifier: ^0.0.43
-        version: 0.0.43
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -756,9 +750,6 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  graphemesplit@2.4.4:
-    resolution: {integrity: sha512-lKrpp1mk1NH26USxC/Asw4OHbhSQf5XfrWZ+CDv/dFVvd1j17kFgMotdJvOesmHkbFX9P9sBfpH8VogxOWLg8w==}
-
   graphemesplit@2.6.0:
     resolution: {integrity: sha512-rG9w2wAfkpg0DILa1pjnjNfucng3usON360shisqIMUBw/87pojcBSrHmeE4UwryAuBih7g8m1oilf5/u8EWdQ==}
 
@@ -927,10 +918,6 @@ packages:
   log-symbols@7.0.0:
     resolution: {integrity: sha512-zrc91EDk2M+2AXo/9BTvK91pqb7qrPg2nX/Hy+u8a5qQlbaOflCKO+6SqgZ+M+xUFxGdKTgwnGiL96b1W3ikRA==}
     engines: {node: '>=18'}
-
-  loose-envify@1.4.0:
-    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
-    hasBin: true
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -1182,10 +1169,6 @@ packages:
   queue-tick@1.0.1:
     resolution: {integrity: sha512-kJt5qhMxoszgU/62PLP1CJytzd2NKetjSRnyuj31fDd3Rlcz3fzlFdFLD1SItunPwyqEOkca6GbV612BWfaBag==}
 
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
-    engines: {node: '>=0.10.0'}
-
   react@19.0.0:
     resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
     engines: {node: '>=0.10.0'}
@@ -1333,20 +1316,11 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  twitter-openapi-typescript-generated@0.0.32:
-    resolution: {integrity: sha512-tVDUMB2PLeWNHo+cU/5acd4r01wHGxiJR29A7zJfqZVek0w+kOjc5q0wuO2PIazwtLRnYGr062hyQaH0OT1A9w==}
-
   twitter-openapi-typescript-generated@0.0.37:
     resolution: {integrity: sha512-LKLHJmSgAUYaTB1cKyxoVyUZ3fHvBeIHo520B3yIISM3b01NuIgY6QIDLxuNJzvP4Fd7P049LHbXJl0UeCTzSg==}
 
-  twitter-openapi-typescript@0.0.45:
-    resolution: {integrity: sha512-WYNyOAciU21t5ohL981GTaO4zTmgLd1kr5AEoAIZsIs08vW95QsBCKjMAmOS+J0ue41QuMjpzyMTH6wLjUSS2g==}
-
   twitter-openapi-typescript@0.0.51:
     resolution: {integrity: sha512-J06I5NRPUkPCo5XkfxtFME8fbxYnoGeQlsTRdUROTWCM3nGbRpGPRJ+a6lwyY9ZcGNTGvUtni5ge8+Sn70qTXg==}
-
-  twitter-snap-core@0.0.43:
-    resolution: {integrity: sha512-v3Z1r9YfJMB2GRNdFcFBejIEXEp8SnWjc5XkY8U9CluunkgVbO2ZU6IjWRofhq/1UpiIVCBzJiqd71ReGIs5ww==}
 
   twitter-snap@0.0.71:
     resolution: {integrity: sha512-oSAXFDxe50+dlmeHwj96CR0QJnCo2K4/qiyT48u5jJrbDYMzIHu7xuOurjOhlV5d7SQIsjvQowD9aWdL6kvmYA==}
@@ -2146,11 +2120,6 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphemesplit@2.4.4:
-    dependencies:
-      js-base64: 3.7.7
-      unicode-trie: 2.0.0
-
   graphemesplit@2.6.0:
     dependencies:
       js-base64: 3.7.7
@@ -2296,10 +2265,6 @@ snapshots:
     dependencies:
       is-unicode-supported: 2.1.0
       yoctocolors: 2.1.1
-
-  loose-envify@1.4.0:
-    dependencies:
-      js-tokens: 4.0.0
 
   lru-cache@10.4.3: {}
 
@@ -2514,10 +2479,6 @@ snapshots:
 
   queue-tick@1.0.1: {}
 
-  react@18.3.1:
-    dependencies:
-      loose-envify: 1.4.0
-
   react@19.0.0: {}
 
   registry-auth-token@5.1.0:
@@ -2675,25 +2636,11 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  twitter-openapi-typescript-generated@0.0.32: {}
-
   twitter-openapi-typescript-generated@0.0.37: {}
-
-  twitter-openapi-typescript@0.0.45:
-    dependencies:
-      twitter-openapi-typescript-generated: 0.0.32
 
   twitter-openapi-typescript@0.0.51:
     dependencies:
       twitter-openapi-typescript-generated: 0.0.37
-
-  twitter-snap-core@0.0.43:
-    dependencies:
-      fluent-ffmpeg: 2.1.3
-      graphemesplit: 2.4.4
-      react: 18.3.1
-      twitter-openapi-typescript: 0.0.45
-      twitter-openapi-typescript-generated: 0.0.32
 
   twitter-snap@0.0.71(typescript@5.6.2):
     dependencies:

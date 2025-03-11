@@ -11,9 +11,7 @@
     "@hono/zod-validator": "^0.2.2",
     "dotenv": "^16.4.5",
     "hono": "^4.7.4",
-    "twitter-openapi-typescript": "^0.0.51",
     "twitter-snap": "^0.0.71",
-    "twitter-snap-core": "^0.0.43",
     "webdav": "^5.7.1",
     "zod": "^3.23.8",
     "typescript": "^5.6.2"
