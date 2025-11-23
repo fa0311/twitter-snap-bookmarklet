@@ -1,0 +1,28 @@
+services:
+  twitter-snap:
+    image: ghcr.io/fa0311/twitter-snap-bookmarklet/twitter-snap-bookmarklet-docker:latest
+    container_name: twitter-snap-bookmarklet
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+
+  twitter-snap-api:
+    image: ghcr.io/fa0311/twitter-snap-api/twitter-snap-api-docker:latest-nvenc
+    container_name: twitter-snap-api
+    restart: unless-stopped
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
+      FFMPEG_OPTION: '["-c:v", "hevc_nvenc", "-rc", "constqp", "-qp", "20", "-b_ref_mode", "middle", "-preset", "p5"]'
+    volumes:
+      - cookie.json:/app/cookie.json:ro
+    networks:
+      - twitter-snap-api
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
