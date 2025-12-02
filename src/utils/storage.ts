@@ -47,7 +47,7 @@ export const createWebdavClient = (config: WebdavConfig) => {
     }
   };
 
-  const path = async (path: string) => {
+  const path = (path: string) => {
     const storagePath = `${config.basePath}/${path}`;
     const shareUrl = `${config.baseShareUrl}/${path}`;
     const name = splitdirs(path)[0];

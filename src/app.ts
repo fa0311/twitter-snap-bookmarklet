@@ -44,6 +44,18 @@ const linePush = createLineNotifyClient({
 
 const ignoreError = (error: unknown) => log.error(error);
 
+const checkStorage = async (storageDir: string, id: string) => {
+  const existsCheck = await Promise.all(
+    ["png", "mp4"].map(async (ext) => {
+      const path = storage.path(`snap/${storageDir}/${id}.${ext}`);
+      const exists = await path.exists();
+      return [path.url, exists] as const;
+    }),
+  );
+  const exists = existsCheck.find(([_, exists]) => exists);
+  return exists ? exists[0] : null;
+};
+
 export const createApp = async () => {
   const app = new Hono();
 
@@ -85,28 +97,34 @@ export const createApp = async () => {
     async (c) => {
       const id = c.req.valid("param").id;
       const storageDir = c.req.valid("param").dir;
-      const res = await snap.twitter(id);
-      const ext = getExtByContentType(res.contentType);
-      const dir = await storage.path(`snap/${storageDir}/${id}.${ext}`);
-      const nodeReadable = Readable.fromWeb(res.body);
-      const nodeWriteStream = await dir.createWriteStream({
-        headers: {
-          "Content-Type": res.contentType,
-          "Content-Length": res.length,
-        },
-      });
 
-      (async () => {
-        await pipeline(nodeReadable, nodeWriteStream);
-        await linePush.sendMessage(`スナップしました\n${dir.url}`);
-      })().catch(ignoreError);
+      const exists = await checkStorage(storageDir, id);
+      if (exists) {
+        return c.redirect(exists);
+      } else {
+        const res = await snap.twitter(id);
+        const ext = getExtByContentType(res.contentType);
+        const dir = storage.path(`snap/${storageDir}/${id}.${ext}`);
+        const nodeReadable = Readable.fromWeb(res.body);
+        const nodeWriteStream = await dir.createWriteStream({
+          headers: {
+            "Content-Type": res.contentType,
+            "Content-Length": res.length,
+          },
+        });
 
-      return new Response(nodeReadable, {
-        headers: {
-          "Content-Type": res.contentType,
-          "Content-Length": res.length,
-        },
-      });
+        (async () => {
+          await pipeline(nodeReadable, nodeWriteStream);
+          await linePush.sendMessage(`スナップしました\n${dir.url}`);
+        })().catch(ignoreError);
+
+        return new Response(nodeReadable, {
+          headers: {
+            "Content-Type": res.contentType,
+            "Content-Length": res.length,
+          },
+        });
+      }
     },
   );
   return app;
