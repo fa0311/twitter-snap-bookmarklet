@@ -100,7 +100,7 @@ export const createApp = async () => {
       const id = c.req.valid("param").id;
       const storageDir = c.req.valid("param").dir;
 
-      mutex.runExclusive(async () => {
+      return await mutex.runExclusive(async () => {
         const exists = await checkStorage(`snap/${storageDir}/${id}`);
         if (exists) {
           return c.redirect(exists);
