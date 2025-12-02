@@ -12,6 +12,7 @@ import { pipeline } from "node:stream/promises";
 import pino from "pino";
 import { getEnv } from "./env.js";
 import { createLineNotifyClient } from "./utils/line.js";
+import { createMutex } from "./utils/mutex.js";
 import { createWebdavClient } from "./utils/storage.js";
 import { createTwitterSnapClient, getExtByContentType } from "./utils/twitter-snap.js";
 
@@ -41,13 +42,14 @@ const linePush = createLineNotifyClient({
   token: env.LINE_PUSH_TOKEN,
   baseUrl: env.LINE_PUSH_BASE_URL,
 });
+const mutex = createMutex(1);
 
 const ignoreError = (error: unknown) => log.error(error);
 
-const checkStorage = async (storageDir: string, id: string) => {
+const checkStorage = async (name: string) => {
   const existsCheck = await Promise.all(
     ["png", "mp4"].map(async (ext) => {
-      const path = storage.path(`snap/${storageDir}/${id}.${ext}`);
+      const path = storage.path(`${name}.${ext}`);
       const exists = await path.exists();
       return [path.url, exists] as const;
     }),
@@ -98,33 +100,35 @@ export const createApp = async () => {
       const id = c.req.valid("param").id;
       const storageDir = c.req.valid("param").dir;
 
-      const exists = await checkStorage(storageDir, id);
-      if (exists) {
-        return c.redirect(exists);
-      } else {
-        const res = await snap.twitter(id);
-        const ext = getExtByContentType(res.contentType);
-        const dir = storage.path(`snap/${storageDir}/${id}.${ext}`);
-        const nodeReadable = Readable.fromWeb(res.body);
-        const nodeWriteStream = await dir.createWriteStream({
-          headers: {
-            "Content-Type": res.contentType,
-            "Content-Length": res.length,
-          },
-        });
+      mutex.runExclusive(async () => {
+        const exists = await checkStorage(`snap/${storageDir}/${id}`);
+        if (exists) {
+          return c.redirect(exists);
+        } else {
+          const res = await snap.twitter(id);
+          const ext = getExtByContentType(res.contentType);
+          const dir = storage.path(`snap/${storageDir}/${id}.${ext}`);
+          const nodeReadable = Readable.fromWeb(res.body);
+          const nodeWriteStream = await dir.createWriteStream({
+            headers: {
+              "Content-Type": res.contentType,
+              "Content-Length": res.length,
+            },
+          });
 
-        (async () => {
-          await pipeline(nodeReadable, nodeWriteStream);
-          await linePush.sendMessage(`スナップしました\n${dir.url}`);
-        })().catch(ignoreError);
+          (async () => {
+            await pipeline(nodeReadable, nodeWriteStream);
+            await linePush.sendMessage(`スナップしました\n${dir.url}`);
+          })().catch(ignoreError);
 
-        return new Response(nodeReadable, {
-          headers: {
-            "Content-Type": res.contentType,
-            "Content-Length": res.length,
-          },
-        });
-      }
+          return new Response(nodeReadable, {
+            headers: {
+              "Content-Type": res.contentType,
+              "Content-Length": res.length,
+            },
+          });
+        }
+      });
     },
   );
   return app;
