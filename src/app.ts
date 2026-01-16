@@ -108,7 +108,9 @@ export const createApp = async () => {
           const res = await snap.twitter(id);
           const ext = getExtByContentType(res.contentType);
           const dir = storage.path(`snap/${storageDir}/${id}.${ext}`);
-          const nodeReadable = Readable.fromWeb(res.body);
+          const [bodyForResponse, bodyForFile] = res.body.tee();
+          const nodeReadable = Readable.fromWeb(bodyForResponse);
+          const nodeReadableForFile = Readable.fromWeb(bodyForFile);
           const nodeWriteStream = await dir.createWriteStream({
             headers: {
               "Content-Type": res.contentType,
@@ -117,7 +119,7 @@ export const createApp = async () => {
           });
 
           (async () => {
-            await pipeline(nodeReadable, nodeWriteStream);
+            await pipeline(nodeReadableForFile, nodeWriteStream);
             await linePush.sendMessage(`スナップしました\n${dir.url}`);
           })().catch(ignoreError);
 
