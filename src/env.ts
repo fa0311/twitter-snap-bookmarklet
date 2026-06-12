@@ -14,7 +14,7 @@ const env = parseEnv(
     WEBDAV_BASE_PATH: z.string().default("/"),
     WEBDAV_SHARE_BASE_URL: z.string(),
 
-    LINE_PUSH_TOKEN: z.string().nullable(),
+    LINE_PUSH_TOKEN: z.string().optional(),
     LINE_PUSH_BASE_URL: z.string().default("https://notify-api.line.me/api/notify"),
 
     TWITTER_SNAP_API_BASEURL: z.string(),
