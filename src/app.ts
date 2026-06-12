@@ -38,10 +38,18 @@ const storage = createWebdavClient({
 const snap = await createTwitterSnapClient({
   baseurl: env.TWITTER_SNAP_API_BASEURL,
 });
-const linePush = createLineNotifyClient({
-  token: env.LINE_PUSH_TOKEN,
-  baseUrl: env.LINE_PUSH_BASE_URL,
-});
+
+
+const linePush = (() => {
+  if(env.LINE_PUSH_TOKEN) {
+      return createLineNotifyClient({
+      token: env.LINE_PUSH_TOKEN,
+      baseUrl: env.LINE_PUSH_BASE_URL,
+    });
+  } else {
+    return undefined;
+  }
+})();
 const mutex = createMutex(1);
 
 const ignoreError = (error: unknown) => log.error(error);
@@ -120,7 +128,7 @@ export const createApp = async () => {
 
           (async () => {
             await pipeline(nodeReadableForFile, nodeWriteStream);
-            await linePush.sendMessage(`スナップしました\n${dir.url}`);
+            await linePush?.sendMessage(`スナップしました\n${dir.url}`);
           })().catch(ignoreError);
 
           return new Response(nodeReadable, {
