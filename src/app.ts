@@ -1,14 +1,14 @@
+import { Readable, type Writable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import { swaggerUI } from "@hono/swagger-ui";
 import { z } from "@hono/zod-openapi";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { describeRoute, openAPIRouteHandler } from "hono-openapi";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { secureHeaders } from "hono/secure-headers";
-import { Readable } from "node:stream";
-import { pipeline } from "node:stream/promises";
+import { describeRoute, openAPIRouteHandler } from "hono-openapi";
 import pino from "pino";
 import { getEnv } from "./env.js";
 import { createLineNotifyClient } from "./utils/line.js";
@@ -39,10 +39,9 @@ const snap = await createTwitterSnapClient({
   baseurl: env.TWITTER_SNAP_API_BASEURL,
 });
 
-
 const linePush = (() => {
-  if(env.LINE_PUSH_TOKEN) {
-      return createLineNotifyClient({
+  if (env.LINE_PUSH_TOKEN) {
+    return createLineNotifyClient({
       token: env.LINE_PUSH_TOKEN,
       baseUrl: env.LINE_PUSH_BASE_URL,
     });
@@ -127,7 +126,7 @@ export const createApp = async () => {
           });
 
           (async () => {
-            await pipeline(nodeReadableForFile, nodeWriteStream);
+            await pipeline(nodeReadableForFile, nodeWriteStream as Writable);
             await linePush?.sendMessage(`スナップしました\n${dir.url}`);
           })().catch(ignoreError);
 
